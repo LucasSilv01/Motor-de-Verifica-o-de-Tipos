@@ -1,50 +1,161 @@
 # Motor de Verificação de Tipos
 
-Este projeto implementa um **motor de verificação de tipos** em Python, com suporte a AST, escopos aninhados, declaração de variáveis, atribuições, expressões binárias e coerções de tipo (cast).
+Um projeto educacional implementando um **motor de verificação de tipos** em Python com suporte completo a análise semântica, escopos aninhados e coerção de tipos.
 
-## Requisitos
+## 📋 Descrição
 
-- Python 3.10+
-- Dependências opcionais para gerar o relatório PDF: `markdown`, `fpdf`
+Este motor simula a etapa de **verificação semântica** de um compilador real. Ele processa uma Árvore de Sintaxe Abstrata (AST) representada em JSON e valida:
 
-## Como executar
+- ✅ Declaração e escopo de variáveis
+- ✅ Compatibilidade de tipos em atribuições
+- ✅ Operações aritméticas e comparações
+- ✅ Coerção implícita e cast explícito
+- ✅ Expressões condicionais
 
-1. Abra um terminal em `c:\Users\josel\Compiladores`
-2. Execute:
+## 🛠️ Requisitos
 
-```powershell
-C:/Users/josel/AppData/Roaming/uv/python/cpython-3.14.5-windows-x86_64-none/python.exe type_checker.py examples.json
+- **Python 3.10+**
+- Dependências opcionais (para gerar PDF): `markdown`, `fpdf`
+
+## 📦 Estrutura do Projeto
+
+```
+.
+├── type_checker.py       # Motor principal de verificação de tipos
+├── examples.json         # Entrada de teste em formato JSON
+├── report.md             # Relatório técnico (Markdown)
+├── generate_report.py    # Conversor Markdown → PDF
+├── requirements.txt      # Dependências Python
+└── README.md             # Esta documentação
 ```
 
-3. Para ver um exemplo incorporado sem arquivo JSON, execute:
+## 🚀 Como Executar
+
+### Opção 1: Usar o Python System (mais rápido)
 
 ```powershell
-C:/Users/josel/AppData/Roaming/uv/python/cpython-3.14.5-windows-x86_64-none/python.exe type_checker.py
+cd c:\Users\josel\Compiladores
+python type_checker.py
 ```
 
-## Testes
-
-O arquivo `examples.json` contém um programa de exemplo que demonstra:
-
-- declaração de variáveis
-- atribuição
-- operações aritméticas e de comparação
-- coerção de tipos com `cast`
-
-## Gerar relatório PDF (opcional)
-
-1. Instale dependências:
+### Opção 2: Usar a Virtualenv (recomendado)
 
 ```powershell
-C:/Users/josel/AppData/Roaming/uv/python/cpython-3.14.5-windows-x86_64-none/python.exe -m pip install -r requirements.txt
+cd c:\Users\josel\Compiladores
+.venv\Scripts\Activate.ps1
+python type_checker.py
 ```
 
-2. Execute:
+### Opção 3: Executar com arquivo JSON específico
 
 ```powershell
-C:/Users/josel/AppData/Roaming/uv/python/cpython-3.14.5-windows-x86_64-none/python.exe generate_report.py
+python type_checker.py examples.json
 ```
 
-Se faltar uma dependência, o script avisará qual módulo está ausente.
+## 📝 Exemplos de Uso
 
-O arquivo `report.pdf` será gerado a partir de `report.md`.
+### Exemplo 1: Programa Válido
+
+Execute sem argumentos para testar o programa embutido:
+
+```powershell
+python type_checker.py
+```
+
+**Saída esperada:**
+```
+Executando programa de exemplo embutido...
+
+Verificação de tipos concluída com sucesso: nenhum erro encontrado.
+```
+
+### Exemplo 2: Usando Arquivo JSON
+
+```powershell
+python type_checker.py examples.json
+```
+
+O arquivo `examples.json` contém um programa demonstrando:
+- Declaração de variáveis (`int`, `float`)
+- Atribuições com operações aritméticas
+- Cast explícito entre tipos
+- Expressões condicionais
+
+### Exemplo 3: Detectar Erro de Tipo
+
+Modifique `examples.json` para introduzir um erro:
+
+```json
+{
+  "type": "VarDecl",
+  "name": "x",
+  "vartype": "int",
+  "value": { "type": "Literal", "value": 3.5 }
+}
+```
+
+**Saída esperada:**
+```
+Erro de verificação de tipos: Incompatibilidade de tipos na declaração de 'x': esperado int, obtido float.
+```
+
+## 🏗️ Estrutura da AST
+
+O motor suporta os seguintes nós de AST (definidos em JSON):
+
+| Nó | Descrição |
+|-----|----------|
+| `Program` | Raiz contendo lista de comandos |
+| `VarDecl` | Declaração de variável com tipo |
+| `Assignment` | Atribuição a variável existente |
+| `Literal` | Valores constantes (int, float, bool) |
+| `VarRef` | Referência a variável |
+| `BinaryOp` | Operação binária (+, -, *, /, ==, !=, <, >, <=, >=) |
+| `Cast` | Conversão de tipo explícita |
+| `Block` | Bloco com escopo aninhado |
+| `If` | Expressão condicional |
+
+## 📊 Gerar Relatório PDF (Opcional)
+
+### Passo 1: Ativar Virtualenv
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+### Passo 2: Instalar Dependências
+
+```powershell
+pip install -r requirements.txt
+```
+
+### Passo 3: Gerar PDF
+
+```powershell
+python generate_report.py
+```
+
+Resultado: arquivo `report.pdf` será criado com as seções do relatório técnico.
+
+## ✅ Validação de Tipos
+
+O motor implementa as seguintes regras:
+
+| Operação | Tipos Válidos | Resultado |
+|----------|---------------|-----------|
+| Aritméticos (+, -, *, /) | `int`, `float` | `int` se ambos `int`, senão `float` |
+| Comparação (==, !=, <, >, <=, >=) | `int`, `float` (compatíveis) | `bool` |
+| Atribuição | Tipos devem ser compatíveis | Erro se incompatível |
+| Cast | `int` ↔ `float` | Conversão explícita |
+| Promoção | `int` → `float` | Automática em contextos `float` |
+
+## 📌 Notas Importantes
+
+- **Escopo**: Variáveis são verificadas respeitando escopos aninhados dentro de blocos
+- **Coerção**: A conversão de `int` para `float` é automática; o inverso requer `cast` explícito
+- **Erro Fatal**: Qualquer erro de tipo encerra a verificação imediatamente
+- **Formato JSON**: Certifique-se de que o arquivo JSON segue a estrutura esperada
+
+## 📄 Licença
+
+Projeto educacional para fins acadêmicos.
