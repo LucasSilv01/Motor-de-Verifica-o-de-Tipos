@@ -34,15 +34,24 @@ Este motor simula a etapa de **verificação semântica** de um compilador real.
 ### Opção 1: Usar o Python System (mais rápido)
 
 ```powershell
-cd c:\Users\josel\Compiladores
+# Navegue para a pasta do projeto
+cd caminho/para/o/projeto
+
 python type_checker.py
 ```
 
 ### Opção 2: Usar a Virtualenv (recomendado)
 
 ```powershell
-cd c:\Users\josel\Compiladores
+# Navegue para a pasta do projeto
+cd caminho/para/o/projeto
+
+# Windows
 .venv\Scripts\Activate.ps1
+
+# Linux/Mac
+source .venv/bin/activate
+
 python type_checker.py
 ```
 
@@ -51,6 +60,8 @@ python type_checker.py
 ```powershell
 python type_checker.py examples.json
 ```
+
+> **Nota:** Substitua `caminho/para/o/projeto` pelo diretório onde você clonou ou baixou este repositório.
 
 ## 📝 Exemplos de Uso
 
@@ -106,25 +117,39 @@ O motor suporta os seguintes nós de AST (definidos em JSON):
 | Nó | Descrição |
 |-----|----------|
 | `Program` | Raiz contendo lista de comandos |
-| `VarDecl` | Declaração de variável com tipo |
-| `Assignment` | Atribuição a variável existente |
-| `Literal` | Valores constantes (int, float, bool) |
-| `VarRef` | Referência a variável |
-| `BinaryOp` | Operação binária (+, -, *, /, ==, !=, <, >, <=, >=) |
-| `Cast` | Conversão de tipo explícita |
-| `Block` | Bloco com escopo aninhado |
-| `If` | Expressão condicional |
+| `VarDecl` |Navegar para a Pasta do Projeto
 
-## 📊 Gerar Relatório PDF (Opcional)
+```powershell
+cd caminho/para/o/projeto
+```
 
-### Passo 1: Ativar Virtualenv
+### Passo 2: Ativar Virtualenv
 
+**Windows:**
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-### Passo 2: Instalar Dependências
+**Linux/Mac:**
+```bash
+source .venv/bin/activate
+```
 
+### Passo 3: Instalar Dependências
+
+```powershell
+pip install -r requirements.txt
+```
+
+### Passo 4: Gerar PDF
+
+```powershell
+python generate_report.py
+```
+
+**Resultado:** O arquivo `report.pdf` será criado com as seções do relatório técnico.
+
+> **Nota:** Substitua `caminho/para/o/projeto` pelo diretório onde você clonou este repositóri
 ```powershell
 pip install -r requirements.txt
 ```
