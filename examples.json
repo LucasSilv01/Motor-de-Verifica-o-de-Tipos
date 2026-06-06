@@ -1,0 +1,70 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "VarDecl",
+      "name": "x",
+      "vartype": "int",
+      "value": { "type": "Literal", "value": 2 }
+    },
+    {
+      "type": "VarDecl",
+      "name": "y",
+      "vartype": "float",
+      "value": { "type": "Literal", "value": 3.5 }
+    },
+    {
+      "type": "Assignment",
+      "name": "x",
+      "value": {
+        "type": "BinaryOp",
+        "operator": "+",
+        "left": { "type": "VarRef", "name": "x" },
+        "right": {
+          "type": "Cast",
+          "targetType": "int",
+          "expression": { "type": "VarRef", "name": "y" }
+        }
+      }
+    },
+    {
+      "type": "Assignment",
+      "name": "y",
+      "value": {
+        "type": "BinaryOp",
+        "operator": "*",
+        "left": { "type": "VarRef", "name": "x" },
+        "right": { "type": "Literal", "value": 2.0 }
+      }
+    },
+    {
+      "type": "If",
+      "condition": {
+        "type": "BinaryOp",
+        "operator": ">",
+        "left": { "type": "VarRef", "name": "y" },
+        "right": { "type": "Literal", "value": 4.0 }
+      },
+      "thenBranch": {
+        "type": "Block",
+        "statements": [
+          {
+            "type": "Assignment",
+            "name": "x",
+            "value": { "type": "Literal", "value": 10 }
+          }
+        ]
+      },
+      "elseBranch": {
+        "type": "Block",
+        "statements": [
+          {
+            "type": "Assignment",
+            "name": "x",
+            "value": { "type": "Literal", "value": 0 }
+          }
+        ]
+      }
+    }
+  ]
+}
