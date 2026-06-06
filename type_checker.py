@@ -217,10 +217,20 @@ def parse_node(data: Dict[str, Any]) -> ASTNode:
     if node_type == "Cast":
         return Cast(target_type=data["targetType"], expression=parse_node(data["expression"]))
     if node_type == "If":
+        then_branch_node = parse_node(data["thenBranch"])
+        if not isinstance(then_branch_node, Block):
+            raise TypeCheckError(f"thenBranch deve ser um Block, obtido {type(then_branch_node).__name__}")
+        
+        else_branch_node = None
+        if data.get("elseBranch"):
+            else_branch_node = parse_node(data["elseBranch"])
+            if not isinstance(else_branch_node, Block):
+                raise TypeCheckError(f"elseBranch deve ser um Block, obtido {type(else_branch_node).__name__}")
+        
         return If(
             condition=parse_node(data["condition"]),
-            then_branch=parse_node(data["thenBranch"]),
-            else_branch=parse_node(data["elseBranch"]) if data.get("elseBranch") else None,
+            then_branch=then_branch_node,
+            else_branch=else_branch_node,
         )
     raise TypeCheckError(f"Tipo de nó JSON inválido: {node_type}")
 
