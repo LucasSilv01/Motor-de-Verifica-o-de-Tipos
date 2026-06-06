@@ -98,7 +98,7 @@ Erro de verificação de tipos: Incompatibilidade de tipos na atribuição de 'x
 Comando:
 
 ```powershell
-C:/Users/josel/AppData/Roaming/uv/python/cpython-3.14.5-windows-x86_64-none/python.exe type_checker.py
+
 ```
 
 Saída esperada:
