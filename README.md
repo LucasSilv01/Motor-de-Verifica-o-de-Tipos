@@ -1,7 +1,6 @@
 [Relatorio_Tecnico_Motor_Verificacao_Tipos_Completo.pdf](https://github.com/user-attachments/files/28730077/Relatorio_Tecnico_Motor_Verificacao_Tipos_Completo.pdf)
 ### Membros do Grupo
 
-- João Victor Lima Almeida Puglies
 - José Lucas da Silva Cardoso
 - Emylle Rayssa
 
